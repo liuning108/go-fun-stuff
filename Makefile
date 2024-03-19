@@ -10,4 +10,4 @@ clean :
 run: release clean
 
 watch:
-	@npx nodemon --exec "make run" ./main.go --signal SIGTERM
+	@npx nodemon --exec "go run ." ./main.go --signal SIGTERM
