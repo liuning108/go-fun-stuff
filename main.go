@@ -1,40 +1,39 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Position struct {
 	x, y int
 }
 
-type Entity struct {
-	name   string
-	id     string
-	vesion string
+func (p *Position) Move(x int, y int) string {
+	p.x = x
+	p.y = y
+	return fmt.Sprintf("The position is moverd by  : %d, %d", p.x, p.y)
+}
+
+type Player struct {
 	Position
 }
 
-type SpecialEntity struct {
-	Entity
-	specialFiled float64
+type Color int
+
+func (c Color) String() string {
+	return [...]string{"BLUE", "BLACK", "YELLOW", "PINK"}[c]
 }
 
-// 1
+const (
+	ColorBlue Color = iota
+	ColorBlack
+	ColorYellow
+	ColorPink
+)
+
 func main() {
-
-	e := &SpecialEntity{
-		specialFiled: 88,
-		Entity: Entity{
-			name:   "my special entity",
-			id:     "my spceilal id ",
-			vesion: "1.0",
-			Position: Position{
-				x: 100,
-				y: 200,
-			},
-		},
-	}
-	e.name = "my entity is special  "
-	e.y = 220
-	fmt.Printf("%+v\n", e)
-
+	p := Player{}
+	s := p.Move(10, 20)
+	fmt.Println(s)
+	fmt.Println("the color is : ", ColorBlue)
 }
