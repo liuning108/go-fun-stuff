@@ -2,52 +2,27 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
-type Putter interface {
-	Put(id int, val any)
+type TransFormFunc func(s string) string
+
+func Uppercase(s string) string {
+	return strings.ToUpper(s) + "0000"
 }
 
-type Storage interface {
-	Get(id int) any
-	Put(id int, val any)
-}
-
-type FooStorage struct{}
-
-func (s *FooStorage) Get(id int) any {
-	return nil
-}
-
-func (s *FooStorage) Put(id int, val any) {
-	// do nothing
-}
-
-type BarStorage struct{}
-
-func (s *BarStorage) Get(id int) any {
-	return nil
-}
-
-func (s *BarStorage) Put(id int, val any) {
-	// do nothing
-}
-
-type Server struct {
-	store Storage
-}
-
-func updateValue(id int, val any, p Putter) {
-	p.Put(id, val)
-
-}
-
-func main() {
-	s := &Server{
-		store: &FooStorage{},
+func Prefixer(prefix string) TransFormFunc {
+	return func(s string) string {
+		return prefix + "-" + s
 	}
 
-	updateValue(1, "foo", s.store)
+}
 
-	fmt.Print("Hello, world!")
+func transformString(s string, fn TransFormFunc) string {
+	return fn(s)
+}
+func main() {
+	fmt.Println(transformString("hello Sailor!", Uppercase))
+	fmt.Println(transformString("hello Sailor!", Prefixer("PFoo")))
+
 }
