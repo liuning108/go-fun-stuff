@@ -9,4 +9,5 @@ About Golang 's Everything
 - Lesson03  **Adv Interfacew Tech 03**
 - Lesson04  **Adv FP Tech 04**
 - Lesson05  **Generics**
-- 
+- Lesson06  **Pointer**
+- Lesson07  **Test**
