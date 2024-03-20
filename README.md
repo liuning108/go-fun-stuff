@@ -11,3 +11,4 @@ About Golang 's Everything
 - Lesson05  **Generics**
 - Lesson06  **Pointer**
 - Lesson07  **Test**
+- Lesson08  **goroutines and channels**

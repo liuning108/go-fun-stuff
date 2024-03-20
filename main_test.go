@@ -1,64 +1,35 @@
 package main
 
 import (
-	"sync"
+	"reflect"
 	"testing"
 )
 
-// BenchmarkCounter_Mutex-12    	   10000	    965368 ns/op	    1045 B/op	      28 allocs/op
-func BenchmarkCounter_Mutex(b *testing.B) {
-	counter := 0
-	mu := sync.Mutex{}
-
-	for i := 0; i < b.N; i++ {
-		b.RunParallel(func(pb *testing.PB) {
-			n := 0
-			for pb.Next() {
-				n++
-				if n%10000 == 0 {
-					//Write
-					mu.Lock()
-					counter++
-					mu.Unlock()
-				} else {
-					//Read
-					mu.Lock()
-					_ = counter
-					mu.Unlock()
-
-				}
-
-			}
-
-		})
+func TestEqualPalyers(t *testing.T) {
+	expected := Player{
+		Name: "John",
+		Hp:   100,
 	}
+	have := Player{
+		Name: "John2",
+		Hp:   100,
+	}
+
+	if !reflect.DeepEqual(expected, have) {
+		t.Errorf("expected %v, have %v", expected, have)
+	}
+
 }
 
-// BenchmarkCounter_RWMutex-12    	   10000	   1222708 ns/op	    1035 B/op	      28 allocs/op
-func BenchmarkCounter_RWMutex(b *testing.B) {
-	counter := 0
-	mu := sync.RWMutex{}
-
-	for i := 0; i < b.N; i++ {
-		b.RunParallel(func(pb *testing.PB) {
-			n := 0
-			for pb.Next() {
-				n++
-				if n%10000 == 0 {
-					//Write
-					mu.Lock()
-					counter++
-					mu.Unlock()
-				} else {
-					//Read
-					mu.RLock()
-					_ = counter
-					mu.RUnlock()
-
-				}
-
-			}
-
-		})
+func TestCalculateValues(t *testing.T) {
+	var (
+		expected = 10
+		a        = 5
+		b        = 5
+	)
+	have := calculateValues(a, b)
+	if have != expected {
+		t.Errorf("expected %d, have %d", expected, have)
 	}
+
 }
