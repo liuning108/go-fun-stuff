@@ -4,36 +4,50 @@ import (
 	"fmt"
 )
 
-type Position struct {
-	x, y int
+type Putter interface {
+	Put(id int, val any)
 }
 
-func (p *Position) Move(x int, y int) string {
-	p.x = x
-	p.y = y
-	return fmt.Sprintf("The position is moverd by  : %d, %d", p.x, p.y)
+type Storage interface {
+	Get(id int) any
+	Put(id int, val any)
 }
 
-type Player struct {
-	Position
+type FooStorage struct{}
+
+func (s *FooStorage) Get(id int) any {
+	return nil
 }
 
-type Color int
-
-func (c Color) String() string {
-	return [...]string{"BLUE", "BLACK", "YELLOW", "PINK"}[c]
+func (s *FooStorage) Put(id int, val any) {
+	// do nothing
 }
 
-const (
-	ColorBlue Color = iota
-	ColorBlack
-	ColorYellow
-	ColorPink
-)
+type BarStorage struct{}
+
+func (s *BarStorage) Get(id int) any {
+	return nil
+}
+
+func (s *BarStorage) Put(id int, val any) {
+	// do nothing
+}
+
+type Server struct {
+	store Storage
+}
+
+func updateValue(id int, val any, p Putter) {
+	p.Put(id, val)
+
+}
 
 func main() {
-	p := Player{}
-	s := p.Move(10, 20)
-	fmt.Println(s)
-	fmt.Println("the color is : ", ColorBlue)
+	s := &Server{
+		store: &FooStorage{},
+	}
+
+	updateValue(1, "foo", s.store)
+
+	fmt.Print("Hello, world!")
 }
