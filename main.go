@@ -1,12 +1,35 @@
 package main
 
-type Player struct {
-	Name string
-	Hp   int
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+
+	msgch := make(chan string, 10)
+	msgch <- "A"
+	msgch <- "B"
+	msgch <- "C"
+
+	close(msgch)
+
+	// for {
+	// 	msg, ok := <-msgch
+	// 	if !ok {
+	// 		break
+	// 	}
+	// 	fmt.Println("msg", msg)
+	// }
+
+	for msg := range msgch {
+		fmt.Println(msg)
+	}
+	fmt.Println("Done")
+
 }
 
-func calculateValues(x int, y int) int {
-	return x + y
-}
-func main() {
+func fetchRes(n int) string {
+	time.Sleep(time.Second * 2)
+	return fmt.Sprintf("res %d", n)
 }
