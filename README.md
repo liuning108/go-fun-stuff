@@ -8,4 +8,5 @@ About Golang 's Everything
 - Lesson02  **Adv Type Tech 02 ---iota 与 fmt.Stringer**
 - Lesson03  **Adv Interfacew Tech 03**
 - Lesson04  **Adv FP Tech 04**
+- Lesson05  **Generics**
 - 
